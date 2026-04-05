@@ -1,27 +1,23 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
 import { AddCustomerPage } from '../../../src/pages/manager/AddCustomerPage';
 import { CustomersListPage } from '../../../src/pages/manager/CustomersListPage';
+import { customer } from '../../../src/testdata/helper';
 
 test('Assert manager can add new customer', async ({ page }) => {
   const addCustomerPage = new AddCustomerPage(page);
   const customersListPage = new CustomersListPage(page);
 
-  const firstName = faker.person.firstName();
-  const lastName = faker.person.lastName();
-  const postCode = faker.location.zipCode();
-
   await addCustomerPage.open();
-  await addCustomerPage.fillFirstName(firstName);
-  await addCustomerPage.fillLastName(lastName);
-  await addCustomerPage.fillPostCode(postCode);
+  await addCustomerPage.fillFirstName(customer.firstName);
+  await addCustomerPage.fillLastName(customer.lastName);
+  await addCustomerPage.fillPostCode(customer.postCode);
   await addCustomerPage.clickSubmitButton();
   await page.reload();
   await addCustomerPage.clickCustomersButton();
   await customersListPage.waitForOpened();
-  await customersListPage.assertLastRowContains(firstName);
-  await customersListPage.assertLastRowContains(lastName);
-  await customersListPage.assertLastRowContains(postCode);
+  await customersListPage.assertLastRowContains(customer.firstName);
+  await customersListPage.assertLastRowContains(customer.lastName);
+  await customersListPage.assertLastRowContains(customer.postCode);
   await customersListPage.assertLastRowDoesNotContain('Account Number');
   /* 
   Test:

@@ -9,6 +9,9 @@ export class CustomersListPage {
     this.customersButton = page.getByRole('button', { name: 'Customers' });
     this.customerRows = page.locator('table tbody tr');
     this.lastRow = this.customerRows.last();
+    this.targetRow = (firstName, lastName, postCode) => this.customerRows.filter({ 
+      hasText: `${firstName} ${lastName} ${postCode}`, 
+    });
   }
 
   async open() {
@@ -32,5 +35,14 @@ export class CustomersListPage {
 
   async assertLastRowDoesNotContain(item) {
     await expect(this.lastRow).not.toContainText(item);
+  }
+
+  async deleteCustomer(firstName, lastName, postCode) {
+    await this.targetRow(firstName, lastName, postCode)
+    .locator('button').click();
+  }
+
+  async assertNoSuchCustomerIsListed(firstName, lastName, postCode) {
+    await expect(this.targetRow(firstName, lastName, postCode)).toBeHidden();
   }
 }
