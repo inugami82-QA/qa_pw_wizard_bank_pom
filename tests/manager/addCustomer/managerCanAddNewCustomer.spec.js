@@ -18,7 +18,7 @@ test('Assert manager can add new customer', async ({ page }) => {
   await customersListPage.assertLastRowContains(customer.firstName);
   await customersListPage.assertLastRowContains(customer.lastName);
   await customersListPage.assertLastRowContains(customer.postCode);
-  await customersListPage.assertLastRowDoesNotContain('Account Number');
+  await customersListPage.assertLastRowHasNoAccount();
   /* 
   Test:
   1. Open add customer page by link

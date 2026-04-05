@@ -37,6 +37,10 @@ export class CustomersListPage {
     await expect(this.lastRow).not.toContainText(item);
   }
 
+  async assertLastRowHasNoAccount() {
+    await expect(this.lastRow.locator('td').nth(3)).toBeEmpty();
+  }
+
   async deleteCustomer(firstName, lastName, postCode) {
     await this.targetRow(firstName, lastName, postCode)
     .locator('button').click();

@@ -1,9 +1,4 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-
-let firstName;
-let lastName;
-let postalCode;
 
 test.beforeEach(async ({ page }) => {
   /* 
@@ -14,9 +9,6 @@ test.beforeEach(async ({ page }) => {
   4. Fill the Postal Code.
   5. Click [Add Customer].
   */
-  firstName = faker.person.firstName();
-  lastName = faker.person.lastName();
-  postalCode = faker.location.zipCode();
 });
 
 test('Assert manager can search customer by First Name', async ({ page }) => {
