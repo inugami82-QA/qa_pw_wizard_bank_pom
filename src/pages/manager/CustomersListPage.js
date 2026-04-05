@@ -12,6 +12,7 @@ export class CustomersListPage {
     this.targetRow = (firstName, lastName, postCode) => this.customerRows.filter({ 
       hasText: `${firstName} ${lastName} ${postCode}`, 
     });
+    this.searchField = page.getByRole('textbox', { name: 'Search Customer' });
   }
 
   async open() {
@@ -41,6 +42,10 @@ export class CustomersListPage {
     await expect(this.lastRow.locator('td').nth(3)).toBeEmpty();
   }
 
+  async assertOnlyOneRow() {
+    expect(this.customerRows).toHaveCount(1);
+  }
+
   async deleteCustomer(firstName, lastName, postCode) {
     await this.targetRow(firstName, lastName, postCode)
     .locator('button').click();
@@ -53,5 +58,9 @@ export class CustomersListPage {
   async assertCustomerHasAccount(firstName, lastName, postCode) {
     await expect(this.targetRow(firstName, lastName, postCode)
     .getByRole('cell').nth(3)).not.toBeEmpty();
+  }
+
+  async searchCustomer(value) {
+    await this.searchField.fill(value);
   }
 }
