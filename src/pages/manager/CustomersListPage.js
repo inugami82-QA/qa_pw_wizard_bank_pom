@@ -45,4 +45,9 @@ export class CustomersListPage {
   async assertNoSuchCustomerIsListed(firstName, lastName, postCode) {
     await expect(this.targetRow(firstName, lastName, postCode)).toBeHidden();
   }
+
+  async assertCustomerHasAccount(firstName, lastName, postCode) {
+    await expect(this.targetRow(firstName, lastName, postCode)
+    .getByRole('cell').nth(3)).not.toBeEmpty();
+  }
 }

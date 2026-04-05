@@ -44,4 +44,8 @@ export class AddCustomerPage {
   async clickCustomersButton() {
     await this.customersButton.click();
   }
+
+  async clickOpenAccount() {
+    await this.openAccountButton.click();
+  }
 }
