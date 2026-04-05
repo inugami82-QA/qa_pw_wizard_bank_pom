@@ -1,11 +1,16 @@
 import { test } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 import { AddCustomerPage } from '../../../src/pages/manager/AddCustomerPage';
 import { CustomersListPage } from '../../../src/pages/manager/CustomersListPage';
-import { customer } from '../../../src/testdata/helper';
 
 test('Assert manager can add new customer', async ({ page }) => {
   const addCustomerPage = new AddCustomerPage(page);
   const customersListPage = new CustomersListPage(page);
+  const customer = {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    postCode: faker.location.zipCode()
+  }
 
   await addCustomerPage.open();
   await addCustomerPage.fillFirstName(customer.firstName);

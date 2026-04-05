@@ -1,11 +1,19 @@
 import { test } from '@playwright/test';
-import { customer } from '../../../src/testdata/helper';
+import { faker } from '@faker-js/faker';
 import { AddCustomerPage } from '../../../src/pages/manager/AddCustomerPage';
 import { OpenAccountPage } from '../../../src/pages/manager/OpenAccountPage';
 import { CustomersListPage } from '../../../src/pages/manager/CustomersListPage';
 
+let customer;
+
 test.beforeEach(async ({ page }) => {
   const addCustomerPage = new AddCustomerPage(page);
+  customer = {
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      postCode: faker.location.zipCode()
+    }
+    customer.fullName = `${customer.firstName} ${customer.lastName}`,
 
   await addCustomerPage.open();
   await addCustomerPage.fillFirstName(customer.firstName);
@@ -24,7 +32,7 @@ test.beforeEach(async ({ page }) => {
   */
 });
 
-test('Assert manager can add new customer', async ({ page }) => {
+test('Assert manager can open account for a new customer', async ({ page }) => {
   const addCustomerPage = new AddCustomerPage(page);
   const openAccountPage = new OpenAccountPage(page);
   const customersListPage = new CustomersListPage(page);
